@@ -189,7 +189,7 @@
             <h1>Your Journey to PCOD Wellness Starts Here</h1>
             <p>Connect with healthcare experts, find support, and join a caring community dedicated to PCOD awareness and management.</p>
             <div>
-                <button class="btn btn-primary">Get Started</button>
+                <a href="{% url 'login' %}" class="btn btn-primary">Get Started</a>
                 <button class="btn btn-secondary">Learn More</button>
             </div>
         </div>
@@ -238,31 +238,6 @@
             </div>
         </section>
 
-    <script>
-        // Add smooth scrolling for buttons
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Add your navigation logic here
-            });
-        });
-
-        // Add animation on scroll for feature cards
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'all 0.6s ease-out';
-            observer.observe(card);
-        });
-    </script>
+    
 </body>
 </html>
