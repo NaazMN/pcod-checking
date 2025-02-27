@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-color: #f3f4f6;
+            --text-color: #1f2937;
+        }
+
+        body {
+            background-color: var(--background-color);
+        }
+
+        .navbar {
+            background-color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            padding: 2rem 1rem;
+            box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background-color: #e5e7eb;
+        }
+
+        .menu-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .activity-feed {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #e5e7eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .menu-item span {
+                display: none;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Smart Healthcare System</div>
+        <div class="user-menu">
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+            </div>
+            <div class="user-avatar">U</div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+        <a href="{% url 'userdashboard' %}">
+                <div class="menu-item active" data-page="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </div>
+        </a>
+        
+        <a href="{% url 'predict' %}">
+            <div class="menu-item" data-page="prediction">
+                <i class="fas fa-chart-line"></i>
+                <span>PCOD Prediction</span>
+            </div>
+        </a>
+
+            <div class="menu-item" data-page="experts">
+                <i class="fas fa-user-md"></i>
+                <span>Find Experts</span>
+            </div>
+            <div class="menu-item" data-page="consultations">
+                <i class="fas fa-comments"></i>
+                <span>Consultations</span>
+            </div>
+            <div class="menu-item" data-page="community">
+                <i class="fas fa-users"></i>
+                <span>Community</span>
+            </div>
+        </aside>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script>
+        // Menu item click handling
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all menu items
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Get the page identifier
+                const page = this.dataset.page;
+                
+                // Here you would typically handle page navigation
+                // For example, you could make an AJAX call to your Django backend:
+                /*
+                fetch(`/api/${page}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Update the main content area with the new page content
+                    });
+                */
+            });
+        });
+
+        // Example function to update statistics
+        function updateStats() {
+            // In a real application, you would fetch this data from your Django backend
+            fetch('/api/dashboard/stats')
+                .then(response => response.json())
+                .then(data => {
+                    // Update the statistics cards with the new data
+                    // This is just a placeholder for demonstration
+                });
+        }
+
+        // Example function to load activity feed
+        function loadActivityFeed() {
+            // In a real application, you would fetch this data from your Django backend
+            fetch('/api/dashboard/activity')
+                .then(response => response.json())
+                .then(data => {
+                    // Update the activity feed with the new data
+                    // This is just a placeholder for demonstration
+                });
+        }
+
+        // You could set up periodic updates
+        // setInterval(updateStats, 60000); // Update stats every minute
+        // setInterval(loadActivityFeed, 30000); // Update activity feed every 30 seconds
+    </script>
+</body>
+</html>

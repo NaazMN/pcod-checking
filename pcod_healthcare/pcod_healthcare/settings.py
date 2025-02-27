@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pcod_finder',
+    'user',
+    'expert',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'pcod_healthcare.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': ['pcod_finder/template','templates','user/template','expert/template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

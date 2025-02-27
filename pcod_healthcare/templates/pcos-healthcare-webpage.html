@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Healthcare System for PCOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f7f7f7;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border: 8px solid #1e88e5;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e88e5;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #555;
+        }
+        
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .hero-content h1 {
+            font-size: 2.2rem;
+            color: #1e88e5;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #1e88e5;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #1565c0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(30, 136, 229, 0.3);
+        }
+        
+        .features {
+            margin-bottom: 3rem;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #1e88e5;
+            margin-bottom: 2rem;
+        }
+        
+        .features-grid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .feature-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #1e88e5;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #444;
+        }
+        
+        .mission-vision {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .mission, .vision {
+            flex: 1;
+            min-width: 300px;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+        
+        .mission {
+            background-color: rgba(30, 136, 229, 0.1);
+        }
+        
+        .vision {
+            background-color: rgba(30, 136, 229, 0.05);
+        }
+        
+        .mission h2, .vision h2 {
+            font-size: 1.8rem;
+            color: #1e88e5;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .mission p, .vision p {
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+        
+        .ml-section {
+            background-color: rgba(30, 136, 229, 0.07);
+            padding: 2.5rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .ml-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .ml-content h2 {
+            font-size: 1.8rem;
+            color: #1e88e5;
+            margin-bottom: 1.5rem;
+        }
+        
+        .ml-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .ml-image {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .ml-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonials {
+            margin-bottom: 3rem;
+        }
+        
+        .testimonials h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #1e88e5;
+            margin-bottom: 2rem;
+        }
+        
+        .testimonial-grid {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+        
+        .testimonial-card {
+            min-width: 300px;
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-card .quote {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-card .author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-card .author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+        
+        .testimonial-card .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .testimonial-card .author-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #eee;
+        }
+        
+        footer p {
+            color: #777;
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #1e88e5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: #1565c0;
+            transform: translateY(-3px);
+        }
+        
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animated {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .hero {
+                flex-direction: column;
+            }
+            
+            .hero-content, .hero-image {
+                min-width: 100%;
+                margin-bottom: 1.5rem;
+            }
+            
+            .mission-vision {
+                flex-direction: column;
+            }
+            
+            .ml-section {
+                flex-direction: column;
+                padding: 1.5rem;
+            }
+            
+            .ml-image {
+                order: -1;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">PCOS Care</div>
+            <div class="tagline">Smart Healthcare System for PCOS Management</div>
+        </header>
+        
+        <section class="hero animated">
+            <div class="hero-content">
+                <h1>Empowering Women with PCOS</h1>
+                <p>Our innovative healthcare platform connects women with PCOS to expert healthcare providers and a supportive community. Through personalized care and shared experiences, we're transforming the PCOS management journey.</p>
+                <a href="#features" class="btn">Explore Features <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="hero-image">
+                <img src="/api/placeholder" alt="Smart Healthcare System illustration">
+            </div>
+        </section>
+        
+        <section id="features" class="features animated">
+            <h2>How Our Platform Works</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-user-plus"></i>
+                    <h3>User Registration</h3>
+                    <p>Create your personal account to access our comprehensive PCOS management platform tailored to your needs.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-user-md"></i>
+                    <h3>Expert Consultation</h3>
+                    <p>Connect with specialized healthcare providers according to your preferences and receive personalized care.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Community Support</h3>
+                    <p>Join our vibrant online community to share experiences, find support, and build meaningful connections.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-robot"></i>
+                    <h3>ML Diagnostics</h3>
+                    <p>Access our machine learning system that helps detect PCOS based on input parameters and medical history.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="ml-section animated">
+            <div class="ml-content">
+                <h2>PCOS Detection with ML</h2>
+                <p>Our project utilizes advanced machine learning technology to help identify Polycystic Ovary Syndrome (PCOS) based on various health parameters. This innovative approach supports early detection and management of PCOS.</p>
+                <p>The system analyzes multiple factors and provides insights that can be discussed with healthcare experts for proper diagnosis and treatment planning.</p>
+                
+                <a href="#" class="btn" style="margin-top: 1.5rem;">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="ml-image">
+                <img src="/api/placeholder" alt="ML system visualization">
+            </div>
+        </section>
+        
+        <section class="mission-vision animated">
+            <div class="mission">
+                <h2>Our Mission</h2>
+                <p>Our mission is to revolutionize PCOS healthcare by creating an accessible, personalized, and community-driven platform that empowers women to take control of their health journey. We strive to break down barriers to quality healthcare by connecting patients with specialized experts and fostering a supportive environment where experiences and knowledge can be shared freely.</p>
+                <p>We are committed to improving the quality of life for women with PCOS through innovative technology, evidence-based care approaches, and building a compassionate community where no one faces this condition alone.</p>
+            </div>
+            <div class="vision">
+                <h2>Our Vision</h2>
+                <p>We envision a world where every woman with PCOS has access to personalized healthcare, emotional support, and the resources needed to thrive. Our vision encompasses a healthcare ecosystem where technology bridges the gap between patients and providers, creating seamless communication and coordinated care.</p>
+                <p>We aim to be the global leader in digital PCOS management, pioneering new approaches to treatment, support, and education that transform how this condition is understood and managed. Together, we're building a future where PCOS no longer limits potential but becomes a manageable aspect of life.</p>
+            </div>
+        </section>
+        
+        <section class="testimonials animated">
+            <h2>Success Stories</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="quote">"This platform changed my PCOS journey completely. Having expert advice and a supportive community at my fingertips has made managing my symptoms so much easier."</p>
+                    <div class="author">
+                        <img src="/api/placeholder" alt="User photo">
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Member since 2023</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="quote">"As a healthcare provider, this platform has helped me connect with patients who truly need specialized PCOS care. The integrated approach is revolutionizing how we treat this condition."</p>
+                    <div class="author">
+                        <img src="/api/placeholder" alt="Expert photo">
+                        <div class="author-info">
+                            <h4>Dr. Emily Chang</h4>
+                            <p>Endocrinologist</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="quote">"The ML detection system helped identify my PCOS when traditional tests were inconclusive. This early diagnosis was crucial for me to start the right treatment plan at the right time."</p>
+                    <div class="author">
+                        <img src="/api/placeholder" alt="User photo">
+                        <div class="author-info">
+                            <h4>Michelle Rivera</h4>
+                            <p>Member since 2022</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2025 PCOS Care - Smart Healthcare System for PCOS</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <a href="#" class="btn">Contact Us</a>
+        </footer>
+    </div>
+    
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.features, .mission-vision, .testimonials, .ml-section').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Testimonial carousel (simplified version)
+        let currentPosition = 0;
+        const testimonials = document.querySelector('.testimonial-grid');
+        
+        function updateTestimonials() {
+            if (window.innerWidth < 768) {
+                currentPosition = (currentPosition + 1) % 3;
+                const scrollAmount = currentPosition * 320;
+                testimonials.scrollTo({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        
+        // Auto-scroll testimonials on smaller screens
+        if (window.innerWidth < 768) {
+            setInterval(updateTestimonials, 5000);
+        }
+    </script>
+</body>
+</html>

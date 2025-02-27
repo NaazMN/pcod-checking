@@ -171,13 +171,11 @@
             <p>Welcome back! Please login to your account</p>
         </div>
 
-        <div class="user-type">
-            <button class="active" data-type="user">User</button>
-            <button data-type="expert">Expert</button>
-            <button data-type="admin">Admin</button>
-        </div>
+       
 
-        <form id="loginForm" onsubmit="return handleLogin(event)">
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
@@ -206,69 +204,6 @@
         </form>
     </div>
 
-    <script>
-        // Handle user type selection
-        const userTypeButtons = document.querySelectorAll('.user-type button');
-        let selectedUserType = 'user';
-
-        userTypeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                userTypeButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                selectedUserType = button.dataset.type;
-            });
-        });
-
-        // Handle login form submission
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            // Reset errors
-            document.querySelectorAll('.error').forEach(error => {
-                error.style.display = 'none';
-            });
-
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const remember = document.getElementById('remember').checked;
-
-            // Validation
-            let isValid = true;
-
-            if (!validateEmail(email)) {
-                document.getElementById('emailError').textContent = 'Please enter a valid email address';
-                document.getElementById('emailError').style.display = 'block';
-                isValid = false;
-            }
-
-            if (password.length < 6) {
-                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
-                document.getElementById('passwordError').style.display = 'block';
-                isValid = false;
-            }
-
-            if (isValid) {
-                // Here you would typically make an API call to your backend
-                console.log('Login attempt:', {
-                    email,
-                    password,
-                    userType: selectedUserType,
-                    remember
-                });
-
-                // Simulate API call and redirect
-                setTimeout(() => {
-                    // For demonstration, redirect to dashboard
-                    window.location.href = '/dashboard';
-                }, 1000);
-            }
-        }
-
-        // Email validation helper
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-    </script>
+  
 </body>
 </html>
