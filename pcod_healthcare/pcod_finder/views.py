@@ -4,7 +4,7 @@ import pickle
 import numpy as np
 from django.shortcuts import render,redirect
 from django.conf import settings
-from . models import Usertable,PCOSPrediction
+from . models import Usertable,PCOSPrediction,Expert_details
 
 
 
@@ -90,10 +90,46 @@ def login(request):
         pass_t=request.POST.get('password')
         user=Usertable.objects.get(email=uname)
         if user.password==pass_t:
-            return redirect('userdashboard')
+            request.session['user_id'] = user.id
+            if user.usertype=='0':
+                return redirect('userdashboard')
+            elif user.usertype=='1':
+                return redirect('expert_dashboard')
+
     return render(request,'login.html')
 
 def learmore(request):
     return render(request,'pcos-healthcare-webpage.html')
+
+
+def healthcareexpert_reg(request):
+
+    if request.method == 'POST':
+        name=request.POST.get('fullName')
+        email=request.POST.get('email')
+        phone=request.POST.get('phone')
+        password=request.POST.get('password')
+
+        specialization=request.POST.get('specialization')
+        experience=request.POST.get('experience')
+        license=request.POST.get('license')
+        qualification=request.POST.get('qualification')
+
+        usertable_Obj = Usertable(name=name,email=email,phoneno=phone,password=password,usertype=1)
+        usertable_Obj.save()
+
+        last_inserted_id = usertable_Obj.id
+
+        qualification_obj=Expert_details(userid=last_inserted_id,Specialization=specialization,Experience=experience,Medical_License=license,Educational_Qualifications=qualification)
+        qualification_obj.save()
+
+        #confirmPassword=request.POST.get('confirmPassword')
+        
+
+
+       
+        return redirect('login')
+
+    return render(request,'expert registration.html')
 
 

@@ -9,8 +9,19 @@ class Usertable(models.Model):
     dob=models.CharField(max_length=30)
     gender=models.CharField(max_length=30)
     password=models.CharField(max_length=30)
+    usertype=models.CharField(max_length=10)
+
+class Expert_details(models.Model):
+    userid=models.CharField(max_length=30)
+    Specialization=models.CharField(max_length=30)
+    Experience=models.CharField(max_length=30)
+    Medical_License=models.CharField(max_length=30)
+    Educational_Qualifications=models.CharField(max_length=30)
+
+
 
 class PCOSPrediction(models.Model):
+    userid=models.CharField(max_length=30)
     cycle_length = models.FloatField()
     FSH = models.FloatField()
     LH = models.FloatField()

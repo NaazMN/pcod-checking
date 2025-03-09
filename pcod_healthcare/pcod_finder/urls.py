@@ -24,7 +24,14 @@ urlpatterns = [
     path('predict/',views.predict,name="predict"),
     path('login/',views.login,name="login"),
     path('learmore/',views.learmore,name="learmore"),
-    path('',include('user.urls'))
+    path('',include('user.urls')),
+    path('',include('expert.urls')),
+
+
+    path('expert/registeration/',views.healthcareexpert_reg,name="expert_registeration"),
+
+
+
 
 
 

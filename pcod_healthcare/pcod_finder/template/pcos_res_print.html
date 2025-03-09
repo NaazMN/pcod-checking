@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCOS Prediction Result</title>
     <style>
         body {
@@ -9,7 +11,7 @@
             padding: 20px;
         }
         .container {
-            max-width: 600px;
+            max-width: 700px;
             margin: auto;
             border: 1px solid #ccc;
             padding: 20px;
@@ -62,6 +64,10 @@
                 display: none;
             }
         }
+        .normal-range {
+            font-size: 12px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -71,81 +77,86 @@
 
     <table>
         <tr>
-            <th>Cycle Length</th>
+            <th>Cycle Length <br><span class="normal-range">21–35 days</span></th>
             <td>{{ prediction.cycle_length }}</td>
         </tr>
         <tr>
-            <th>FSH</th>
+            <th>FSH <br><span class="normal-range">3–10 mIU/mL (Follicular)</span></th>
             <td>{{ prediction.FSH }}</td>
         </tr>
         <tr>
-            <th>LH</th>
+            <th>LH <br><span class="normal-range">2–12 mIU/mL (Follicular)</span></th>
             <td>{{ prediction.LH }}</td>
         </tr>
         <tr>
-            <th>FSH/LH Ratio</th>
+            <th>FSH/LH Ratio <br><span class="normal-range">~1:1 (Normal), >2:1 PCOS</span></th>
             <td>{{ prediction.FSH_LH }}</td>
         </tr>
         <tr>
-            <th>Waist-Hip Ratio</th>
+            <th>Waist-Hip Ratio <br><span class="normal-range">< 0.85 (Normal)</span></th>
             <td>{{ prediction.waist_hip_ratio }}</td>
         </tr>
         <tr>
-            <th>TSH</th>
+            <th>TSH <br><span class="normal-range">0.4–4.0 mIU/L</span></th>
             <td>{{ prediction.TSH }}</td>
         </tr>
         <tr>
-            <th>AMH</th>
+            <th>AMH <br><span class="normal-range">1.0–5.0 ng/mL (Normal)</span></th>
             <td>{{ prediction.AMH }}</td>
         </tr>
         <tr>
-            <th>Vitamin D3</th>
+            <th>Vitamin D3 <br><span class="normal-range">30–50 ng/mL (Normal)</span></th>
             <td>{{ prediction.Vit_D3 }}</td>
         </tr>
         <tr>
-            <th>Progesterone (PRG)</th>
+            <th>Progesterone (PRG) <br><span class="normal-range">< 1 ng/mL (Follicular), >10 ng/mL (Luteal)</span></th>
             <td>{{ prediction.PRG }}</td>
         </tr>
         <tr>
-            <th>Random Blood Sugar (RBS)</th>
+            <th>Random Blood Sugar (RBS) <br><span class="normal-range">70–140 mg/dL</span></th>
             <td>{{ prediction.RBS }}</td>
         </tr>
+
+        <!-- Binary Values (Yes/No) -->
         <tr>
-            <th>Weight Gain</th>
-            <td>{{ prediction.weight_gain }}</td>
+            <th>Weight Gain <br><span class="normal-range">0 = No, 1 = Yes</span></th>
+            <td>{% if prediction.weight_gain == 1 %}Yes{% else %}No{% endif %}</td>
         </tr>
         <tr>
-            <th>Hair Growth</th>
-            <td>{{ prediction.hair_growth }}</td>
+            <th>Hair Growth (Hirsutism) <br><span class="normal-range">0 = No, 1 = Yes</span></th>
+            <td>{% if prediction.hair_growth == 1 %}Yes{% else %}No{% endif %}</td>
         </tr>
         <tr>
-            <th>Skin Darkening</th>
-            <td>{{ prediction.skin_darkening }}</td>
+            <th>Skin Darkening <br><span class="normal-range">0 = No, 1 = Yes</span></th>
+            <td>{% if prediction.skin_darkening == 1 %}Yes{% else %}No{% endif %}</td>
         </tr>
         <tr>
-            <th>Hair Loss</th>
-            <td>{{ prediction.hair_loss }}</td>
+            <th>Hair Loss <br><span class="normal-range">0 = No, 1 = Yes</span></th>
+            <td>{% if prediction.hair_loss == 1 %}Yes{% else %}No{% endif %}</td>
         </tr>
         <tr>
-            <th>Pimples</th>
-            <td>{{ prediction.pimples }}</td>
+            <th>Pimples <br><span class="normal-range">0 = No, 1 = Yes</span></th>
+            <td>{% if prediction.pimples == 1 %}Yes{% else %}No{% endif %}</td>
         </tr>
+
         <tr>
-            <th>Follicle Left</th>
+            <th>Follicle Count (Left) <br><span class="normal-range">6–10 per ovary (Normal), >12 (PCOS)</span></th>
             <td>{{ prediction.follicle_L }}</td>
         </tr>
         <tr>
-            <th>Follicle Right</th>
+            <th>Follicle Count (Right) <br><span class="normal-range">6–10 per ovary (Normal), >12 (PCOS)</span></th>
             <td>{{ prediction.follicle_R }}</td>
         </tr>
         <tr>
-            <th>Avg Follicle Size Left</th>
+            <th>Avg Follicle Size (Left) <br><span class="normal-range">16–26 mm</span></th>
             <td>{{ prediction.avg_f_size_L }}</td>
         </tr>
         <tr>
-            <th>Avg Follicle Size Right</th>
+            <th>Avg Follicle Size (Right) <br><span class="normal-range">16–26 mm</span></th>
             <td>{{ prediction.avg_f_size_R }}</td>
         </tr>
+
+        <!-- Final Prediction Result -->
         <tr class="result">
             <th>Prediction Result</th>
             <td>{{ prediction.prediction_result }}</td>

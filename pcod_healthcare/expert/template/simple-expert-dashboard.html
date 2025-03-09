@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background-color: #6a1b9a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 24px;
+        }
+        
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .button-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .dashboard-button {
+            background-color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 30px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .dashboard-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .button-icon {
+            font-size: 30px;
+            color: #6a1b9a;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Healthcare Expert Dashboard</h1>
+        </header>
+        
+        <div class="dashboard">
+            <div class="button-panel">
+              
+                
+                <button class="dashboard-button" id="messagesBtn">
+                    <span class="button-icon">💬</span>
+                    Messages
+                </button>
+                
+                <button class="dashboard-button" id="communityBtn">
+                    <span class="button-icon">🌐</span>
+                    Community
+                </button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>PCOS Smart Healthcare System © 2025</p>
+        </div>
+    </div>
+    
+    <script>
+        // Simple event listeners for the buttons
+        document.getElementById('userListBtn').addEventListener('click', function() {
+            alert('Navigate to User List page');
+            // window.location.href = "user-list.html";
+        });
+        
+        document.getElementById('profileBtn').addEventListener('click', function() {
+            alert('Navigate to My Profile page');
+            // window.location.href = "expert-profile.html";
+        });
+        
+        document.getElementById('messagesBtn').addEventListener('click', function() {
+            alert('Navigate to Messages page');
+            // window.location.href = "messages.html";
+        });
+        
+        document.getElementById('communityBtn').addEventListener('click', function() {
+            alert('Navigate to Community page');
+            // window.location.href = "community.html";
+        });
+    </script>
+</body>
+</html>
