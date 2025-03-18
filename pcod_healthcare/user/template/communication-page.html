@@ -1,9 +1,10 @@
+<!-- communication-page.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Communication | PCOS Healthcare System</title>
+    <title>Doctor Details</title>
     <style>
         * {
             margin: 0;
@@ -11,755 +12,159 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            background-color: #f5f8fa;
-            color: #333;
+            background-color: #f5f7fa;
+            padding: 20px;
         }
-
-        header {
-            background-color: #7c4dff;
-            padding: 1rem 2rem;
-            color: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        .nav-links a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        main {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-
+        
         .container {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 2rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+        }
+        
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
-
-        .experts-list {
-            background-color: #f0f2f5;
-            padding: 1.5rem;
-            border-right: 1px solid #e1e4e8;
-            max-height: 700px;
-            overflow-y: auto;
+        
+        .details-table th,
+        .details-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
         }
-
-        .section-title {
-            margin-bottom: 1rem;
-            color: #333;
-            font-size: 1.25rem;
+        
+        .details-table th {
+            background-color: #3498db;
+            color: white;
             font-weight: 600;
         }
-
-        .expert-card {
-            background-color: white;
-            padding: 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+        
+        .details-table tr:hover {
+            background-color: #f1f5f9;
         }
-
-        .expert-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        
+        .details-table tr:last-child td {
+            border-bottom: none;
         }
-
-        .expert-card.active {
-            border-left: 4px solid #7c4dff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .expert-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .expert-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #7c4dff;
-        }
-
-        .expert-details h3 {
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .expert-details p {
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        .chat-area {
+        
+        .contact-info {
             display: flex;
             flex-direction: column;
-            height: 700px;
+            gap: 5px;
         }
-
-        .chat-header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #e1e4e8;
+        
+        .contact-info span {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 5px;
         }
-
-        .expert-profile {
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem;
-            background-color: #f9fbfd;
-            border-bottom: 1px solid #e1e4e8;
-        }
-
-        .expert-profile-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .expert-profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: #7c4dff;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .expert-profile-name h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.25rem;
-            color: #333;
-        }
-
-        .expert-profile-name p {
-            font-size: 1rem;
-            color: #666;
-        }
-
-        .expert-profile-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .info-item {
-            margin-bottom: 0.75rem;
-        }
-
-        .info-item h4 {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 0.25rem;
-        }
-
-        .info-item p {
-            font-size: 1rem;
-            color: #333;
-        }
-
-        .expert-profile-bio h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
-            color: #333;
-        }
-
-        .expert-profile-bio p {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #444;
-        }
-
-        .chat-messages {
-            flex-grow: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            background-color: #f9f9f9;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: #888;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #ccc;
-        }
-
-        .message {
-            max-width: 70%;
-            padding: 0.75rem 1rem;
-            border-radius: 1rem;
-            position: relative;
-        }
-
-        .message.outgoing {
-            align-self: flex-end;
-            background-color: #7c4dff;
-            color: white;
-            border-bottom-right-radius: 0.25rem;
-        }
-
-        .message.incoming {
-            align-self: flex-start;
-            background-color: white;
-            color: #333;
-            border-bottom-left-radius: 0.25rem;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .message-time {
-            font-size: 0.7rem;
-            opacity: 0.7;
-            margin-top: 0.25rem;
-            text-align: right;
-        }
-
-        .chat-input {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid #e1e4e8;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .chat-input textarea {
-            flex-grow: 1;
-            padding: 0.75rem 1rem;
-            border: 1px solid #e1e4e8;
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
             border-radius: 20px;
-            outline: none;
-            resize: none;
-            font-size: 0.95rem;
-            line-height: 1.4;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: #e1f5fe;
+            color: #0288d1;
         }
-
-        .chat-input textarea:focus {
-            border-color: #7c4dff;
-        }
-
-        .send-btn {
-            background-color: #7c4dff;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            cursor: pointer;
-            font-size: 1.25rem;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .send-btn:hover {
-            background-color: #6c3aff;
-        }
-
-        .send-btn:disabled {
-            background-color: #bbb;
-            cursor: not-allowed;
-        }
-
+        
         @media screen and (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-
-            .experts-list {
-                display: none;
-            }
-
-            .experts-list.mobile-view {
+            .details-table {
                 display: block;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 80%;
-                height: 100%;
-                z-index: 100;
+                overflow-x: auto;
+                white-space: nowrap;
             }
             
-            .expert-profile-info {
-                grid-template-columns: 1fr;
+            .header {
+                padding: 15px;
+            }
+            
+            .details-table th,
+            .details-table td {
+                padding: 12px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .details-table th,
+            .details-table td {
+                padding: 10px;
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">PCOS Care</div>
-        </nav>
-    </header>
-
-    <main>
-        <div class="container">
-            <div class="experts-list">
-                <h2 class="section-title">Healthcare Experts</h2>
-                
-                <!-- Expert cards will be populated dynamically -->
-                <div id="experts-container">
-                    <!-- Expert cards will go here -->
-                </div>
-            </div>
-
-            <div class="chat-area">
-                <div class="chat-header">
-                    <div class="expert-avatar" id="chat-avatar">...</div>
-                    <div class="expert-details">
-                        <h3 id="chat-doctor-name">Select a healthcare expert</h3>
-                        <p id="chat-doctor-specialty"></p>
-                    </div>
-                </div>
-                
-                <div class="expert-profile" id="expert-profile" style="display: none;">
-                    <div class="expert-profile-header">
-                        <div class="expert-profile-avatar" id="profile-avatar"></div>
-                        <div class="expert-profile-name">
-                            <h2 id="profile-name"></h2>
-                            <p id="profile-specialty"></p>
-                        </div>
-                    </div>
-                    
-                    <div class="expert-profile-info">
-                        <div class="info-column">
-                            <div class="info-item">
-                                <h4>Experience</h4>
-                                <p id="profile-experience"></p>
-                            </div>
-                            <div class="info-item">
-                                <h4>Educational Qualifications</h4>
-                                <p id="profile-qualification"></p>
-                            </div>
-                        </div>
-                        <div class="info-column">
-                            <div class="info-item">
-                                <h4>Medical License</h4>
-                                <p id="profile-license"></p>
-                            </div>
-                            <div class="info-item">
-                                <h4>Contact</h4>
-                                <p id="profile-phone"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="chat-messages" id="chat-messages">
-                    <div class="empty-state">
-                        <i>💬</i>
-                        <h3>Start a conversation</h3>
-                        <p>Select a healthcare expert from the list to begin chatting</p>
-                    </div>
-                </div>
-
-                <div class="chat-input">
-                    <textarea id="message-input" placeholder="Type your message here..." rows="1" disabled></textarea>
-                    <button id="send-button" class="send-btn" disabled>➤</button>
-                </div>
-            </div>
+    <div class="container">
+        <div class="header">
+            <h1>Doctor Communication Portal</h1>
+            <p>Details of medical professionals available for consultation</p>
         </div>
-    </main>
 
-    {# Pass the doctors data as JSON to JavaScript #}
-    {{ details|json_script:"doctors-data" }}
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get doctors data from Django context
-            let doctorsList = [];
-            try {
-                // Parse the JSON data from the script tag
-                doctorsList = JSON.parse(document.getElementById('doctors-data').textContent);
-            } catch (e) {
-                console.error("Error parsing doctors data:", e);
-                // Fallback to empty list if there's an error
-                doctorsList = [];
-            }
+        <table class="details-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Contact Information</th>
+                    <th>Specialization</th>
+                    <th>Experience</th>
+                    <th>Qualifications</th>
+                    <th>License</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in details %}
+                <tr>
+                    <td>{{ doctor.name }}</td>
+                    <td class="contact-info">
+                        <span>📧 {{ doctor.email }}</span>
+                        <span>📱 {{ doctor.phoneno }}</span>
+                    </td>
+                    <td><span class="badge">{{ doctor.Specialization }}</span></td>
+                    <td>{{ doctor.Experience }} years</td>
+                    <td>{{ doctor.Educational_Qualifications }}</td>
+                    <td>{{ doctor.Medical_License }}</td>
+                    <td>
+                        <a href="{% url 'chat_system_box' doctor.userid %}" style="text-decoration: none;">
+                            Chat
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
             
-            // Function to render doctor cards
-            function renderDoctors(doctors) {
-                const expertsContainer = document.getElementById('experts-container');
-                expertsContainer.innerHTML = '';
-                
-                doctors.forEach((doctor) => {
-                    // Create initials for avatar
-                    const nameParts = doctor.name.split(' ');
-                    const initials = nameParts.map(part => part[0]).join('').toUpperCase();
-                    
-                    const expertCard = document.createElement('div');
-                    expertCard.classList.add('expert-card');
-                    expertCard.setAttribute('data-id', doctor.userid);
-                    
-                    expertCard.innerHTML = `
-                        <div class="expert-info">
-                            <div class="expert-avatar">${initials}</div>
-                            <div class="expert-details">
-                                <h3>Dr. ${doctor.name}</h3>
-                                <p>${doctor.Specialization}</p>
-                            </div>
-                        </div>
-                    `;
-                    
-                    expertsContainer.appendChild(expertCard);
-                });
-                
-                // Add event listeners after creating cards
-                setupExpertCardListeners();
-            }
-            
-            // Store messages for each doctor
-            const conversations = {};
-            
-            // Initialize conversations for each doctor
-            doctorsList.forEach(doctor => {
-                conversations[doctor.userid] = [];
-            });
-            
-            // Fetch existing messages from database for all doctors
-            fetchAllMessages();
-            
-            // Render the doctors list
-            renderDoctors(doctorsList);
-            
-            let currentExpertId = null;
-            let currentUserId = null; // This should be set to the logged-in user's ID
-            
-            // For demo purposes, set a default user ID (this should come from your authentication system)
-            currentUserId = 'current_user_id';
-            
-            const messageInput = document.getElementById('message-input');
-            const sendButton = document.getElementById('send-button');
-            const chatMessages = document.getElementById('chat-messages');
-            const chatDoctorName = document.getElementById('chat-doctor-name');
-            const chatDoctorSpecialty = document.getElementById('chat-doctor-specialty');
-            const chatAvatar = document.getElementById('chat-avatar');
-            const expertProfile = document.getElementById('expert-profile');
-            
-            // Profile elements
-            const profileAvatar = document.getElementById('profile-avatar');
-            const profileName = document.getElementById('profile-name');
-            const profileSpecialty = document.getElementById('profile-specialty');
-            const profileExperience = document.getElementById('profile-experience');
-            const profileQualification = document.getElementById('profile-qualification');
-            const profileLicense = document.getElementById('profile-license');
-            const profilePhone = document.getElementById('profile-phone');
-
-            // Function to fetch all messages from the database
-            function fetchAllMessages() {
-                // This would be an AJAX call to your backend
-                fetch('/api/get-all-messages/')
-                    .then(response => response.json())
-                    .then(data => {
-                        // Organize messages by doctor ID
-                        data.forEach(message => {
-                            if (!conversations[message.doctor_id]) {
-                                conversations[message.doctor_id] = [];
-                            }
-                            
-                            conversations[message.doctor_id].push({
-                                id: message.id,
-                                text: message.text,
-                                time: formatTime(new Date(message.timestamp)),
-                                type: message.sender_id === currentUserId ? 'outgoing' : 'incoming'
-                            });
-                        });
-                        
-                        // If a doctor is already selected, update the conversation
-                        if (currentExpertId) {
-                            displayConversation(currentExpertId);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching messages:', error);
-                    });
-            }
-
-            // Function to fetch messages for a specific doctor
-            function fetchMessagesForDoctor(doctorId) {
-                // This would be an AJAX call to your backend
-                fetch(`/api/get-messages/${doctorId}/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Update the conversations object
-                        conversations[doctorId] = data.map(message => ({
-                            id: message.id,
-                            text: message.text,
-                            time: formatTime(new Date(message.timestamp)),
-                            type: message.sender_id === currentUserId ? 'outgoing' : 'incoming'
-                        }));
-                        
-                        // Update the display
-                        displayConversation(doctorId);
-                    })
-                    .catch(error => {
-                        console.error(`Error fetching messages for doctor ${doctorId}:`, error);
-                    });
-            }
-
-            // Function to save a message to the database
-            function saveMessageToDatabase(message) {
-                // This would be an AJAX call to your backend
-                fetch('/api/save-message/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCsrfToken() // Function to get CSRF token from cookies
-                    },
-                    body: JSON.stringify({
-                        sender_id: currentUserId,
-                        receiver_id: currentExpertId,
-                        message: message.text,
-                        timestamp: new Date().toISOString()
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('Message saved successfully with ID:', data.message_id);
-                        // Update the message with the ID from the database
-                        message.id = data.message_id;
-                    } else {
-                        console.error('Failed to save message:', data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error saving message:', error);
-                });
-            }
-
-            // Helper function to get CSRF token from cookies
-            function getCsrfToken() {
-                const name = 'csrftoken';
-                let cookieValue = null;
-                if (document.cookie && document.cookie !== '') {
-                    const cookies = document.cookie.split(';');
-                    for (let i = 0; i < cookies.length; i++) {
-                        const cookie = cookies[i].trim();
-                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
-                    }
-                }
-                return cookieValue;
-            }
-
-            // Format time for display
-            function formatTime(date) {
-                const hours = date.getHours();
-                const minutes = date.getMinutes();
-                return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
-            }
-
-            // Setup event listeners for expert cards
-            function setupExpertCardListeners() {
-                const expertCards = document.querySelectorAll('.expert-card');
-                
-                expertCards.forEach(card => {
-                    card.addEventListener('click', function() {
-                        const expertId = this.getAttribute('data-id');
-                        const expert = doctorsList.find(doc => doc.userid === expertId);
-                        
-                        if (!expert) return;
-                        
-                        // Remove active class from all cards
-                        expertCards.forEach(c => c.classList.remove('active'));
-                        
-                        // Add active class to clicked card
-                        this.classList.add('active');
-                        
-                        // Create initials for avatar
-                        const nameParts = expert.name.split(' ');
-                        const initials = nameParts.map(part => part[0]).join('').toUpperCase();
-                        
-                        // Update chat header
-                        chatDoctorName.textContent = `Dr. ${expert.name}`;
-                        chatDoctorSpecialty.textContent = expert.Specialization;
-                        chatAvatar.textContent = initials;
-                        
-                        // Show expert profile
-                        expertProfile.style.display = 'block';
-                        
-                        // Populate expert details
-                        profileAvatar.textContent = initials;
-                        profileName.textContent = `Dr. ${expert.name}`;
-                        profileSpecialty.textContent = expert.Specialization;
-                        profileExperience.textContent = expert.Experience;
-                        profileQualification.textContent = expert.Educational_Qualifications;
-                        profileLicense.textContent = expert.Medical_License;
-                        profilePhone.textContent = expert.phoneno;
-                        
-                        // Enable message input
-                        messageInput.disabled = false;
-                        messageInput.focus();
-                        
-                        // Set current expert
-                        currentExpertId = expertId;
-                        
-                        // Fetch messages from database for this expert
-                        fetchMessagesForDoctor(expertId);
-                    });
-                });
-            }
-
-            // Display conversation for a specific expert
-            function displayConversation(expertId) {
-                // Clear chat messages area
-                chatMessages.innerHTML = '';
-                
-                // Initialize conversation array if it doesn't exist
-                if (!conversations[expertId]) {
-                    conversations[expertId] = [];
-                }
-                
-                // If there are no messages, show empty state
-                if (conversations[expertId].length === 0) {
-                    chatMessages.innerHTML = `
-                        <div class="empty-state">
-                            <i>💬</i>
-                            <h3>No messages yet</h3>
-                            <p>Start the conversation with this healthcare expert</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Display all messages for this expert
-                conversations[expertId].forEach(msg => {
-                    const messageElement = document.createElement('div');
-                    messageElement.classList.add('message', msg.type);
-                    
-                    messageElement.innerHTML = `
-                        <div class="message-content">${msg.text}</div>
-                        <div class="message-time">${msg.time}</div>
-                    `;
-                    
-                    chatMessages.appendChild(messageElement);
-                });
-                
-                // Scroll to bottom
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            // Send message
-            function sendMessage() {
-                const messageText = messageInput.value.trim();
-                
-                if (messageText === '' || currentExpertId === null) {
-                    return;
-                }
-                
-                const now = new Date();
-                const time = formatTime(now);
-                
-                // Create message object
-                const newMessage = {
-                    text: messageText,
-                    time: time,
-                    type: 'outgoing'
-                };
-                
-                // Add message to conversation
-                if (!conversations[currentExpertId]) {
-                    conversations[currentExpertId] = [];
-                }
-                conversations[currentExpertId].push(newMessage);
-                
-                // Clear input
-                messageInput.value = '';
-                messageInput.style.height = 'auto';
-                
-                // Update display immediately
-                displayConversation(currentExpertId);
-                
-                // Save message to database
-                saveMessageToDatabase(newMessage);
-            }
-
-            // Handle send button click
-            sendButton.addEventListener('click', sendMessage);
-
-            // Handle enter key press
-            messageInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
-
-            // Enable/disable send button based on input
-            messageInput.addEventListener('input', function() {
-                if (this.value.trim() !== '' && currentExpertId !== null) {
-                    sendButton.disabled = false;
-                } else {
-                    sendButton.disabled = true;
-                }
-                
-                // Auto-resize textarea
-                this.style.height = 'auto';
-                this.style.height = (this.scrollHeight) + 'px';
-            });
-        });
-    </script>
+        </table>
+    </div>
 </body>
 </html>

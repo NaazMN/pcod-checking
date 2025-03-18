@@ -91,10 +91,11 @@
             <div class="button-panel">
               
                 
-                <button class="dashboard-button" id="messagesBtn">
+                <a class="dashboard-button" id="messagesBtn" style="text-decoration: none;" href="{% url 'message_inbox' %}">
+
                     <span class="button-icon">💬</span>
                     Messages
-                </button>
+                </a>
                 
                 <button class="dashboard-button" id="communityBtn">
                     <span class="button-icon">🌐</span>
@@ -108,7 +109,7 @@
         </div>
     </div>
     
-    <script>
+    <!-- <script>
         // Simple event listeners for the buttons
         document.getElementById('userListBtn').addEventListener('click', function() {
             alert('Navigate to User List page');
@@ -129,6 +130,6 @@
             alert('Navigate to Community page');
             // window.location.href = "community.html";
         });
-    </script>
+    </script> -->
 </body>
 </html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Messages</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .chat-container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    
+    .chat-header {
+      background: #4361ee;
+      color: white;
+      padding: 15px 20px;
+    }
+    
+    .chat-header h2 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.4rem;
+    }
+    
+    .chat-list {
+      padding: 0;
+    }
+    
+    .chat-item {
+      padding: 12px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .chat-item:hover {
+      background-color: #f7f9fc;
+    }
+    
+    .chat-name {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #2d3748;
+    }
+    
+    .chat-badge {
+      background-color: #4361ee;
+      color: white;
+      border-radius: 12px;
+      padding: 3px 10px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .empty-list {
+      padding: 40px 20px;
+      text-align: center;
+      color: #a0aec0;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h2>New Messages</h2>
+    </div>
+    
+    {% if conversations %}
+      <div class="chat-list">
+        {% for conversation in conversations %}
+          <a href="{% url 'chat_system_box' doctor_id=conversation.sender.id %}" class="text-decoration-none">
+            <div class="chat-item">
+              <div class="chat-name">{{ conversation.sender.name }}</div>
+              {% if conversation.unread_count > 0 %}
+                <span class="chat-badge">{{ conversation.unread_count }}</span>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-list">
+        <p>No new messages</p>
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>

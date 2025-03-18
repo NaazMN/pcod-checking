@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from pcod_finder.models import Usertable,Expert_details
+from .models import Message
+from django.db.models import Q
+
 
 # Create your views here.
 
@@ -21,7 +24,7 @@ def chatapp(request):
         expert = expert_details.filter(userid=user.id).first()
         if expert:
             doctors_data.append({
-                'userid': str(user.id),
+                'userid': user.id,
                 'name': user.name,
                 'email': user.email,
                 'phoneno': user.phoneno,
@@ -34,3 +37,38 @@ def chatapp(request):
     # Pass the combined data to the template
     return render(request, 'communication-page.html', {'details': doctors_data})
 
+def chatsystem(request, doctor_id):
+    # Get the doctor information
+    doctor = Usertable.objects.get(id=doctor_id)
+    
+    # Get or create a chat session between user and doctor
+    user_id = request.session['user_id']
+    
+    # Get existing messages
+    messages = Message.objects.filter(
+        (Q(sender_id=user_id) & Q(receiver_id=doctor_id)) |
+        (Q(sender_id=doctor_id) & Q(receiver_id=user_id))
+    ).order_by('timestamp')
+    
+    # Process new message submission
+    if request.method == 'POST':
+        message_text = request.POST.get('messagebox')
+        if message_text:
+            # Create and save new message
+            new_message = Message(
+                sender_id=user_id,
+                receiver_id=doctor_id,
+                content=message_text
+            )
+            new_message.save()
+            
+            # Redirect to avoid form resubmission on page refresh
+            return redirect('chat_system_box', doctor_id=doctor_id)
+    
+    context = {
+        'doctor': doctor,
+        'messages': messages,
+        'user_id': user_id
+    }
+    
+    return render(request, 'doctor-chat-box.html', context)

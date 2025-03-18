@@ -191,6 +191,17 @@
             <p>Please fill in your details to register</p>
         </div>
 
+        {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-row">
@@ -257,16 +268,16 @@
     </div>
 
 
-    <div class="alert-box" id="alertBox">
+    <!-- <div class="alert-box" id="alertBox">
         <h2>Success!</h2>
         <p>User created successfully.</p>
         <button class="btn" onclick="closeAlert()">OK</button>
-    </div>
+    </div> -->
     
 </body>
 </html>
 
-<script>
+<!-- <script>
     function showAlert() {
         document.getElementById('alertBox').classList.add('show');
     }
@@ -276,4 +287,4 @@
 
     // Automatically show the alert after 1 second
     setTimeout(showAlert, 1000);
-</script>
+</script> -->

@@ -4,6 +4,7 @@ import pickle
 import numpy as np
 from django.shortcuts import render,redirect
 from django.conf import settings
+from django.contrib import messages
 from . models import Usertable,PCOSPrediction,Expert_details
 
 
@@ -20,18 +21,29 @@ def print_hello(request):
     return render(request,'home_page.html')
 
 def register(request):
-    if request.POST:
-        name=request.POST.get('firstName')
-        lname=request.POST.get('lastName')
-        email=request.POST.get('email')
-        phone=request.POST.get('phone')
-        dob=request.POST.get('dateOfBirth')
-        gender=request.POST.get('gender')
-        password=request.POST.get('password')
+    if request.method == "POST":
+        name = request.POST.get('firstName')
+        lname = request.POST.get('lastName')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        dob = request.POST.get('dateOfBirth')
+        gender = request.POST.get('gender')
+        password = request.POST.get('password')
+        role=0
 
-        usertable_Obj = Usertable(name=name,lname=lname,email=email,phoneno=phone,dob=dob,gender=gender,password=password)
+        # Check if the email already exists
+        if Usertable.objects.filter(email=email).exists():
+            messages.error(request, "Email already exists! Please use a different email.")
+            return redirect('register_page')  # Redirect to the registration page
+
+        # Create a new user
+        usertable_Obj = Usertable(name=name, lname=lname, email=email, phoneno=phone, dob=dob, gender=gender, password=password,usertype=role)
         usertable_Obj.save()
-    return render(request,'user_registration.html')
+
+        messages.success(request, "Registration successful! You can now log in.")
+        return redirect('login')  # Redirect to the login page after successful registration
+
+    return render(request, 'user_registration.html')
 
 
 
@@ -40,6 +52,7 @@ def predict(request):
     if request.method == 'POST':
         try:
             # Collect input values from the form
+            user_id = request.session['user_id']
             input_data = {
                 'cycle_length': float(request.POST.get('cycle_length', 0)),
                 'FSH': float(request.POST.get('FSH', 0)),
@@ -69,7 +82,7 @@ def predict(request):
             
             # Save data in the database
             pcos_entry = PCOSPrediction.objects.create(
-                **input_data, prediction_result=result
+                **input_data, prediction_result=result,userid=user_id
             )
             pcos_entry.save()
             last_entry = PCOSPrediction.objects.latest('id')  
