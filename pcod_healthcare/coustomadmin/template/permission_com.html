@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Community Requests</title>
+    <style>
+        :root {
+            --primary-color: #1e88e5;
+            --secondary-color: #42a5f5;
+            --accent-color: #64b5f6;
+            --light-color: #e3f2fd;
+            --dark-color: #0d47a1;
+            --success-color: #42a5f5;
+            --danger-color: #2962ff;
+            --info-color: #29b6f6;
+            --background-color: #bbdefb;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, #1565c0, #0d47a1);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .notification-count {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Request Cards */
+        .request-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .request-card {
+            background-color: var(--light-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--secondary-color);
+            position: relative;
+        }
+        
+        .request-card.approved {
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .request-card.rejected {
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .request-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .request-date {
+            color: #1565c0;
+            font-size: 0.9rem;
+        }
+        
+        .expert-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .expert-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .expert-details h4 {
+            margin: 0;
+            color: var(--dark-color);
+        }
+        
+        .request-details {
+            margin-bottom: 20px;
+        }
+        
+        .detail-item {
+            margin-bottom: 10px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .request-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #1e88e5;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #1565c0;
+        }
+        
+        .request-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .status-approved {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .status-rejected {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 8px;
+            max-width: 600px;
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        .modal-body {
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        /* Notification Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .toast {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            animation: toastFadeIn 0.3s;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        @keyframes toastFadeIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .toast-icon {
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .toast-success {
+            border-left-color: var(--success-color);
+        }
+        
+        .toast-success .toast-icon {
+            color: var(--success-color);
+        }
+        
+        .toast-warning {
+            border-left-color: var(--secondary-color);
+        }
+        
+        .toast-warning .toast-icon {
+            color: var(--secondary-color);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 20% auto;
+                padding: 15px;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PCOS Smart Healthcare System</h1>
+        <p>Admin Dashboard</p>
+    </header>
+    
+    <div class="container">
+        <div class="main-content">
+            <div class="section-title">
+                Pending Community Requests
+                <span class="notification-count" id="pendingCount">3 New</span>
+            </div>
+            
+            {% if communities %}
+            <div class="request-cards" id="pendingRequests">
+                {% for community in communities %}
+                <div class="request-card" id="request-{{ forloop.counter }}">
+                    <span class="request-status status-pending">{{ community.status }}</span>
+                    <div class="request-header">
+                        <h3 class="request-title">{{ community.name }}</h3>
+                        <span class="request-date">Created: {{ community.date_c }}</span>
+                    </div>
+        
+                    <div class="request-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Description:</span>
+                            <p>{{ community.description }}</p>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <span class="detail-label">Community Type:</span>
+                            <p>{{ community.Type }}</p>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <span class="detail-label">Rules:</span>
+                            <p>{{ community.Rules }}</p>
+                        </div>
+                    </div>
+        
+                    {% if community.status == "0" %}
+                    <div class="request-actions">
+                        <a href="{% url 'approve' community.id %}" class="btn btn-success approve-btn">Approve Request</a>
+                        <a href="{% url 'reject' community.id %}" class="btn btn-danger reject-btn">Reject Request</a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No pending community requests.</p>
+        {% endif %}
+        
+                
+                <!-- Request Card 2 -->
+              
+    
+    <!-- Toast Notification Container -->
+    
+</body>
+</html>

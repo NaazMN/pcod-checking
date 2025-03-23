@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from pcod_finder.models import Usertable
 from user.models import Message
 from django.db.models import Q
+from django.contrib import messages
+from .models import Community  # Ensure this matches the model name
+
 
 
 # Create your views here.
@@ -59,3 +62,47 @@ def message_inbox(request):
     }
     print(context)
     return render(request, 'chat.html', context)
+
+
+
+
+
+def community(request):
+    user_id = request.session.get('user_id')  # Retrieve user ID from session
+
+    if not user_id:
+        messages.error(request, "User is not logged in!")
+        return redirect('login')  # Redirect to login if user ID is missing
+
+    if request.method == 'POST':
+        communityName = request.POST.get('communityName')
+        communityDescription = request.POST.get('communityDescription')
+        communityType = request.POST.get('communityType')
+        communityRules = request.POST.get('communityRules')
+
+        if not communityName or not communityDescription or not communityType or not communityRules:
+            messages.error(request, "All fields are required!")
+            return redirect('community')  # Redirect to the same page
+
+        try:
+            new_community = Community.objects.create(
+                userid=user_id,
+                name=communityName,
+                description=communityDescription,
+                Type=communityType,
+                Rules=communityRules,
+                status="Pending"  # Default status
+            )
+            messages.success(request, "Community registered successfully!")
+        except Exception as e:
+            messages.error(request, f"Error: {str(e)}")
+
+    # Fetch all communities for the logged-in user
+    user_communities = Community.objects.filter(userid=user_id)  
+
+    context = {
+        'user_communities': user_communities
+    }
+
+    return render(request, 'community_reg.html', context)
+
