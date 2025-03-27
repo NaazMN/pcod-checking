@@ -101,6 +101,25 @@
                     <span class="button-icon">🌐</span>
                     Community
                 </a>
+
+                <a class="dashboard-button" id="communityBtn"  style="text-decoration: none;" href="{% url 'list_community' %}">
+                    <span class="button-icon">🌐</span>
+                    List Community
+                </a>
+            </div>
+            <div class="button-panel">
+                <a class="dashboard-button" id="communityBtn"  style="text-decoration: none;" href="{% url 'list_community_mine' %}">
+                    <span class="button-icon">🌐</span>
+                    My Community
+                </a>
+
+               {% if user_id == 12 %}
+                <a class="dashboard-button" id="communityBtn" style="text-decoration: none;" href="{% url 'admin_dash' %}">
+                    <span class="button-icon">🌐</span>
+                    Go to admin panel
+                </a>
+                {% endif %}
+
             </div>
         </div>
         

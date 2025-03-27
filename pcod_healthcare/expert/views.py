@@ -3,15 +3,18 @@ from pcod_finder.models import Usertable
 from user.models import Message
 from django.db.models import Q
 from django.contrib import messages
-from .models import Community  # Ensure this matches the model name
+from .models import Community
+from user.models import Comminityjoin  # Ensure this matches the model name
 
 
 
 # Create your views here.
 
 def exper_dashboard(request):
-    
-    return render(request,'simple-expert-dashboard.html')
+    # Get user_id from the session
+    user_id = request.session.get('user_id')
+
+    return render(request, 'simple-expert-dashboard.html', {'user_id': user_id})
 
 
 def message_inbox(request):
@@ -106,3 +109,72 @@ def community(request):
 
     return render(request, 'community_reg.html', context)
 
+
+
+def list_community(request):
+    """ Fetch all communities with owner details """
+    user_id = request.session.get('user_id')
+    communities = Community.objects.exclude(userid=user_id).all()
+    community_data = []
+    for community in communities:
+        # Get the owner's name using the userid field
+        owner = Usertable.objects.filter(id=community.userid).first()
+        owner_name = owner.name if owner else "Unknown"
+
+        community_data.append({
+            'id': community.id,
+            'community_name': community.name,
+            'type': community.Type,
+            'owner_name': owner_name
+        })
+
+    return render(request, 'list_community.html', {'communities': community_data})
+
+
+def list_community_mine(request):
+    """ Fetch all communities with owner details """
+    user_id = request.session.get('user_id')
+    communities = Community.objects.filter(userid=user_id).all()
+
+    community_data = []
+    for community in communities:
+        # Get the owner's name using the userid field
+        owner = Usertable.objects.filter(id=community.userid).first()
+        owner_name = owner.name if owner else "Unknown"
+
+        community_data.append({
+            'id': community.id,
+            'community_name': community.name,
+            'type': community.Type,
+            'owner_name': owner_name
+        })
+
+    return render(request, 'list_communitymine.html', {'communities': community_data})
+
+
+def community_members(request, community_id):
+    # Get all users who joined the community
+    members = Comminityjoin.objects.filter(comminityid=community_id)
+
+    member_data = []
+    for member in members:
+        user = Usertable.objects.filter(id=member.userid).first()
+        if user:
+            member_data.append({
+                'name': user.name,  # User name from Usertable
+                'a_status': member.a_status,  # Approval status from Comminityjoin
+                'join_id': member.id  # ID of Comminityjoin entry
+            })
+
+    return render(request, 'community_members.html', {'members': member_data, 'community_id': community_id})
+
+
+def approve(request, join_id):
+    # Find the entry in Comminityjoin by ID
+    comm_join = Comminityjoin.objects.filter(id=join_id).first()
+
+    if comm_join:
+        comm_join.a_status = 2  # Update a_status to 2 (Approved)
+        comm_join.save()  # Save the changes
+
+    return redirect('community_members', community_id=comm_join.comminityid) 

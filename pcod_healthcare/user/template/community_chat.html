@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Chat</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .chat-container { width: 50%; margin: auto; border: 1px solid #ccc; padding: 10px; }
+        .chat-box { height: 300px; overflow-y: scroll; border-bottom: 1px solid #ccc; padding: 10px; }
+        .message { padding: 8px; margin: 5px; border-radius: 10px; max-width: 70%; }
+        .left { background-color: #f1f1f1; text-align: left; }
+        .right { background-color: #d1e7fd; text-align: right; margin-left: auto; }
+        .input-box { display: flex; margin-top: 10px; }
+        .input-box input { flex: 1; padding: 8px; }
+        .input-box button { padding: 8px 15px; background-color: blue; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <h2>Community Chat</h2>
+        <div class="chat-box">
+            {% for msg in chat_data %}
+                <div class="message {% if msg.is_self %}right{% else %}left{% endif %}">
+                    <strong>{{ msg.name }}</strong>: {{ msg.message }}
+                </div>
+            {% empty %}
+                <p>No messages yet. Start the conversation!</p>
+            {% endfor %}
+        </div>
+
+        <form method="post" action="{% url 'community_chat' community_id %}">
+            {% csrf_token %}
+            <div class="input-box">
+                <input type="text" name="message" placeholder="Type a message..." required>
+                <button type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

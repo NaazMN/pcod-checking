@@ -13,3 +13,17 @@ class Message(models.Model):
     
     class Meta:
         ordering = ['timestamp']
+
+
+class Comminityjoin(models.Model):
+    userid=models.IntegerField()
+    comminityid=models.IntegerField()
+    a_status=models.IntegerField()
+
+
+class Communitychatbox(models.Model):
+    userid=models.IntegerField()
+    comminityid=models.IntegerField()
+    message=models.TextField(max_length=30)
+    a_status=models.IntegerField()
+    

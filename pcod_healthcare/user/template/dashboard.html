@@ -142,6 +142,106 @@
             align-items: center;
             justify-content: center;
         }
+        
+        /* New styles for health quotes and notes */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 2rem;
+        }
+        
+        .quote-container {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding: 0 1.5rem;
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 2.5rem;
+            color: #d1d5db;
+            position: absolute;
+            left: 0;
+            top: -1rem;
+        }
+        
+        .quote::after {
+            content: '"';
+            font-size: 2.5rem;
+            color: #d1d5db;
+            position: absolute;
+            right: 0;
+            bottom: -1.5rem;
+        }
+        
+        .quote-author {
+            text-align: right;
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .health-notes {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+        }
+        
+        .note-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .note-list {
+            list-style-type: none;
+        }
+        
+        .note-item {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .note-item::before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .wellness-tip {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        
+        .wellness-tip-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -191,20 +291,42 @@
                 <span>Find Experts</span>
             </div>
         </a>
-        <a href="{% url 'chat_app' %}" style="text-decoration: none;">
+        <a href="{% url 'list_community_user' %}" style="text-decoration: none;">
 
             <div class="menu-item" data-page="consultations">
-                <i class="fas fa-comments"></i>
-                <span>Prediction history</span>
-            </div>
-        </a>
-
-            <div class="menu-item" data-page="community">
                 <i class="fas fa-users"></i>
                 <span>Community</span>
             </div>
-        </aside>
+        </a>
 
+        </aside>
+        
+        <main class="main-content">
+            <!-- Daily Quote Section -->
+            <div class="quote-container">
+                <div class="quote">
+                    The greatest wealth is health.
+                </div>
+                <div class="quote-author">— Virgil</div>
+            </div>
+            
+            <div class="health-notes">
+                <div class="note-title">
+                    <i class="fas fa-heartbeat"></i> Health Insights
+                </div>
+                <ul class="note-list">
+                    <li class="note-item">Regular exercise can help reduce symptoms associated with PCOD and improve insulin sensitivity.</li>
+                    <li class="note-item">Maintaining a balanced diet rich in fiber, lean protein, and healthy fats can help regulate hormones.</li>
+                    <li class="note-item">Stress management through yoga, meditation, or mindfulness can positively impact hormone balance.</li>
+                    <li class="note-item">Getting 7-8 hours of quality sleep is essential for hormonal health and overall wellbeing.</li>
+                </ul>
+                
+                <div class="wellness-tip">
+                    <div class="wellness-tip-title">Today's Wellness Tip</div>
+                    <p>Try incorporating 30 minutes of moderate exercise into your daily routine. Even a brisk walk can make a significant difference to your health.</p>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
@@ -253,6 +375,30 @@
                     // This is just a placeholder for demonstration
                 });
         }
+        
+        // Array of health quotes to rotate
+        const healthQuotes = [
+            { text: "The greatest wealth is health.", author: "Virgil" },
+            { text: "Take care of your body. It's the only place you have to live.", author: "Jim Rohn" },
+            { text: "Health is a state of complete harmony of the body, mind, and spirit.", author: "B.K.S. Iyengar" },
+            { text: "The first wealth is health.", author: "Ralph Waldo Emerson" },
+            { text: "Your health is an investment, not an expense.", author: "Anonymous" }
+        ];
+        
+        // Function to display a random quote
+        function displayRandomQuote() {
+            const quoteContainer = document.querySelector('.quote');
+            const quoteAuthor = document.querySelector('.quote-author');
+            
+            const randomIndex = Math.floor(Math.random() * healthQuotes.length);
+            const randomQuote = healthQuotes[randomIndex];
+            
+            quoteContainer.textContent = randomQuote.text;
+            quoteAuthor.textContent = `— ${randomQuote.author}`;
+        }
+        
+        // Change quote every day or on page refresh
+        displayRandomQuote();
 
         // You could set up periodic updates
         // setInterval(updateStats, 60000); // Update stats every minute

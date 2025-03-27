@@ -97,19 +97,32 @@ def predict(request):
 
 
 def login(request):
-    
     if request.method == 'POST':
-        uname=request.POST.get('email')
-        pass_t=request.POST.get('password')
-        user=Usertable.objects.get(email=uname)
-        if user.password==pass_t:
-            request.session['user_id'] = user.id
-            if user.usertype=='0':
-                return redirect('userdashboard')
-            elif user.usertype=='1':
-                return redirect('expert_dashboard')
+        uname = request.POST.get('email')
+        pass_t = request.POST.get('password')
 
-    return render(request,'login.html')
+        if not uname or not pass_t:
+            messages.error(request, "Email and password are required.")
+            return render(request, 'login.html')
+
+        try:
+            user = Usertable.objects.get(email=uname)
+            if user.password == pass_t:
+                request.session['user_id'] = user.id
+                messages.success(request, "Login successful!")
+                
+                if user.usertype == '0':
+                    return redirect('userdashboard')
+                elif user.usertype == '1':
+                    return redirect('expert_dashboard')
+            else:
+                messages.error(request, "Incorrect password.")
+        except Usertable.DoesNotExist:
+            messages.error(request, "No account found with this email.")
+
+    return render(request, 'login.html')
+
+
 
 def learmore(request):
     return render(request,'pcos-healthcare-webpage.html')
@@ -146,3 +159,28 @@ def healthcareexpert_reg(request):
     return render(request,'expert registration.html')
 
 
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        new_password = request.POST.get('new-password')
+        confirm_password = request.POST.get('confirm-password')
+
+        # Check if email exists in the database
+        user = Usertable.objects.filter(email=email).first()
+
+        if not user:
+            messages.error(request, "Email not found. Please enter a registered email.")
+            return redirect('forgot_password')
+
+        if new_password != confirm_password:
+            messages.error(request, "Passwords do not match. Try again.")
+            return redirect('forgot_password')
+
+        # Update password in the database
+        user.password = new_password  # Ideally, hash this password before saving
+        user.save()
+
+        messages.success(request, "Password reset successful! Please log in.")
+        return redirect('login')
+
+    return render(request, 'password-reset-page.html')

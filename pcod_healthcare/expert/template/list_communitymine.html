@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 10px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .join-btn {
+            padding: 5px 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .join-btn:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <h2>Community List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Community Name</th>
+                <th>Type</th>
+                <th>Active members</th>
+                <th>Chatbox</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for community in communities %}
+            <tr>
+                <td>{{ community.community_name }}</td>
+                <td>{{ community.type }}</td>
+                <td><a class="join-btn" href="{% url 'community_members' community.id %}">Members</a></td>
+                <td><a class="join-btn" href="{% url 'community_chat' community.id %}">My chatbox</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

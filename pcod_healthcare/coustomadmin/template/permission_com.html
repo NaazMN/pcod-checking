@@ -393,12 +393,10 @@
                         </div>
                     </div>
         
-                    {% if community.status == "0" %}
                     <div class="request-actions">
                         <a href="{% url 'approve' community.id %}" class="btn btn-success approve-btn">Approve Request</a>
-                        <a href="{% url 'reject' community.id %}" class="btn btn-danger reject-btn">Reject Request</a>
+                        <a href="" class="btn btn-danger reject-btn">Reject Request</a>
                     </div>
-                    {% endif %}
                 </div>
                 {% endfor %}
             </div>

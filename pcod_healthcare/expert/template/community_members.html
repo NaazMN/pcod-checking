@@ -1,0 +1,23 @@
+<h2>Community Members</h2>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Status</th>
+    </tr>
+    {% for member in members %}
+    <tr>
+        <td>{{ member.name }}</td>
+        <td>
+            {% if member.a_status == 2 %}
+                Approved
+            {% else %}
+            <a href="{% url 'approve_member' member.join_id %}">Waiting for approval</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="2">No members found.</td>
+    </tr>
+    {% endfor %}
+</table>

@@ -24,6 +24,8 @@ urlpatterns = [
     path('predict/',views.predict,name="predict"),
     path('login/',views.login,name="login"),
     path('learmore/',views.learmore,name="learmore"),
+    path('forgot_password/',views.forgot_password,name="forgot_password"),
+
     path('',include('user.urls')),
     path('',include('expert.urls')),
 
