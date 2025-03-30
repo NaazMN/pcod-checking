@@ -12,7 +12,7 @@ urlpatterns = [
 
         path('community/<int:community_id>/members/', views.community_members, name='community_members'),
         path('community/<int:join_id>/approve/', views.approve, name='approve_member'),
-
+        
 
 
 

@@ -168,35 +168,63 @@
 </head>
 <body>
     <div class="login-container">
+        <!-- Back Button -->
+<div class="back-button-container">
+    <button onclick="goBack()" class="back-button">← Back to Home</button>
+</div>
+
+<script>
+    function goBack() {
+        window.location.href = "/";
+    }
+</script>
+
+<style>
+    .back-button-container {
+        display: flex;
+        justify-content: center; /* Centers horizontally */
+        margin-bottom: 15px;
+    }
+
+    .back-button {
+        background-color: #4A90E2;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .back-button:hover {
+        background-color: #357ABD;
+    }
+</style>
+
         <div class="header">
             <h1>Healthcare System</h1>
             <p>Welcome back! Please login to your account</p>
         </div>
 
        
-        {% if messages %}
-        <div class="container mt-3">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
+       
     
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" required id="email" class="form-control" placeholder="Enter email"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Enter a valid email address">
                 <div class="error" id="emailError"></div>
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" required id="password" name="password" required 
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" 
+                title="Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character." 
+                placeholder="Enter a strong password">
                 <div class="error" id="passwordError"></div>
             </div>
 

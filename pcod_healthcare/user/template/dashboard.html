@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Healthcare Dashboard</title>
+    <title>Smart Healthcare Dashboard</title>
     <style>
         * {
             margin: 0;
@@ -91,68 +91,58 @@
         .main-content {
             flex: 1;
             padding: 2rem;
-        }
-
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .stat-card h3 {
-            color: var(--text-color);
-            margin-bottom: 1rem;
-        }
-
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .activity-feed {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .activity-icon {
-            width: 40px;
-            height: 40px;
-            background-color: #e5e7eb;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* New styles for health quotes and notes */
-        .main-content {
-            flex: 1;
-            padding: 2rem;
             display: grid;
             grid-template-columns: 1fr;
             grid-template-rows: auto 1fr;
             gap: 2rem;
         }
-        
+
+        /* Welcome Banner Styles */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: fadeInSlide 0.8s ease-out;
+        }
+
+        .welcome-icon {
+            font-size: 3rem;
+            margin-right: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .welcome-content {
+            flex-grow: 1;
+        }
+
+        .welcome-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Existing styles continue */
         .quote-container {
             background-color: white;
             border-radius: 0.5rem;
@@ -252,14 +242,70 @@
                 display: none;
             }
             
-            .stats-container {
-                grid-template-columns: 1fr;
+            .welcome-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .welcome-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
             }
         }
+        .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: 350px; /* Increased width */
+    padding: 30px; /* Increased padding */
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.popup-content {
+    font-size: 20px; /* Larger text */
+    font-weight: bold;
+}
+
+.popup button {
+    background-color: #2563eb; /* Blue color */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+
     </style>
 </head>
 <body>
+    <div id="loginSuccessPopup" class="popup">
+        <div class="popup-content">
+            <p>Successfully Logged In!</p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+    </div>
+    
     <nav class="navbar">
+        <a href="{% url 'home' %}" onclick="logoutUser()" style="
+        background-color: #1e1786;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        margin-right: 15px;
+    ">
+    Logout
+    </a>
         <div class="logo">Smart Healthcare System</div>
         <div class="user-menu">
             <div class="notifications">
@@ -298,10 +344,36 @@
                 <span>Community</span>
             </div>
         </a>
+        <a href="{% url 'community' %}" style="text-decoration: none;">
+
+            <div class="menu-item" data-page="consultations">
+                <i class="fas fa-users"></i>
+                <span>Create Community</span>
+            </div>
+        </a>
+
+        <a href="{% url 'list_community_mine' %}" style="text-decoration: none;">
+
+            <div class="menu-item" data-page="consultations">
+                <i class="fas fa-users"></i>
+                <span>My Community</span>
+            </div>
+        </a>
 
         </aside>
         
         <main class="main-content">
+            <!-- New Welcome Banner -->
+            <div class="welcome-banner">
+                <div class="welcome-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <div class="welcome-content">
+                    <div class="welcome-title">Welcome to Your Health Dashboard</div>
+                    <div class="welcome-subtitle">Stay informed, stay healthy. Your personalized health insights are just a click away.</div>
+                </div>
+            </div>
+            
             <!-- Daily Quote Section -->
             <div class="quote-container">
                 <div class="quote">
@@ -331,7 +403,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script>
-        // Menu item click handling
+        // Existing JavaScript remains unchanged
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', function() {
                 // Remove active class from all menu items
@@ -399,6 +471,36 @@
         
         // Change quote every day or on page refresh
         displayRandomQuote();
+        function logoutUser() {
+            sessionStorage.removeItem("popupShown");
+    // Perform logout action
+    fetch('/logout/', { method: 'POST' })
+        .then(response => {
+            if (response.ok) {
+                // Redirect to login page after successful logout
+                window.location.href = "{% url 'login' %}";
+            }
+        });
+}
+
+function showPopup() {
+    // Show the popup only if not already shown in this session
+    if (!sessionStorage.getItem("popupShown")) { 
+        document.getElementById("loginSuccessPopup").style.display = "block";
+    }
+}
+
+function closePopup() {
+    document.getElementById("loginSuccessPopup").style.display = "none";
+    sessionStorage.setItem("popupShown", "true"); // Mark popup as shown
+}
+
+// Show popup only on first login
+window.addEventListener("load", function() { 
+    showPopup();
+});
+
+
 
         // You could set up periodic updates
         // setInterval(updateStats, 60000); // Update stats every minute

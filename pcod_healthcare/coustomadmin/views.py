@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from expert.models import Community
-
+from pcod_finder.models import Usertable
 # Create your views here.
 
 
@@ -21,3 +21,12 @@ def approve(request, id):
     community.save()
     
     return redirect('permission_community')  # Redirect back to the list
+
+def list_users(request):
+    users = Usertable.objects.all()  # Fetch all users
+    return render(request, 'list_users.html', {'users': users})
+
+def delete_user(request, user_id):
+    user = Usertable.objects.get(id=user_id)
+    user.delete()
+    return redirect('list_users')  # Redirect to updated user list

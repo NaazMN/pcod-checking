@@ -110,7 +110,8 @@ def login(request):
             if user.password == pass_t:
                 request.session['user_id'] = user.id
                 messages.success(request, "Login successful!")
-                
+                if uname == 'admin@gmail.com':
+                    return redirect('admin_dash')
                 if user.usertype == '0':
                     return redirect('userdashboard')
                 elif user.usertype == '1':

@@ -14,7 +14,7 @@
         }
         
         body {
-            background-color: #f5f7fa;
+            background-color: #7b8ead;
             padding: 20px;
         }
         
@@ -90,7 +90,7 @@
             border-radius: 20px;
             font-size: 14px;
             font-weight: 500;
-            background-color: #e1f5fe;
+            background-color: hsl(199, 50%, 74%);
             color: #0288d1;
         }
         
@@ -126,6 +126,20 @@
 </head>
 <body>
     <div class="container">
+        <a href="{% url 'userdashboard' %}" style="
+    display: inline-block;
+    background-color: #2563eb; /* Blue color */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px;
+">
+    ← Back to Dashboard
+</a>
+
         <div class="header">
             <h1>Doctor Communication Portal</h1>
             <p>Details of medical professionals available for consultation</p>

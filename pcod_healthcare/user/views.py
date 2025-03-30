@@ -8,7 +8,8 @@ from django.utils.timezone import now
 
 
 # Create your views here.
-
+def home(request):
+    return render(request, 'home_page.html')
 def user_dashboard(request):
     return render(request,'dashboard.html')
 
@@ -157,3 +158,43 @@ def community_chat(request, community_id):
         })
 
     return render(request, 'community_chat.html', {'community_id': community_id, 'chat_data': chat_data})
+
+
+def community(request):
+    user_id = request.session.get('user_id')  # Retrieve user ID from session
+
+    if not user_id:
+        messages.error(request, "User is not logged in!")
+        return redirect('login')  # Redirect to login if user ID is missing
+
+    if request.method == 'POST':
+        communityName = request.POST.get('communityName')
+        communityDescription = request.POST.get('communityDescription')
+        communityType = request.POST.get('communityType')
+        communityRules = request.POST.get('communityRules')
+
+        if not communityName or not communityDescription or not communityType or not communityRules:
+            messages.error(request, "All fields are required!")
+            return redirect('community')  # Redirect to the same page
+
+        try:
+            new_community = Community.objects.create(
+                userid=user_id,
+                name=communityName,
+                description=communityDescription,
+                Type=communityType,
+                Rules=communityRules,
+                status="Pending"  # Default status
+            )
+            messages.success(request, "Community registered successfully!")
+        except Exception as e:
+            messages.error(request, f"Error: {str(e)}")
+
+    # Fetch all communities for the logged-in user
+    user_communities = Community.objects.filter(userid=user_id)  
+
+    context = {
+        'user_communities': user_communities
+    }
+
+    return render(request, 'community_reg.html', context)

@@ -9,68 +9,114 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         
         body {
-            background-color: #f5f7fa;
+            background-color: #eef1f7;
             padding: 20px;
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
         
         header {
-            background-color: #6a1b9a;
+            background: linear-gradient(135deg, #3c53d2, #1e1786);
             color: white;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
-            border-radius: 8px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin-bottom: 30px;
         }
         
         h1 {
-            font-size: 24px;
+            font-size: 26px;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 0;
+        }
+        
+        .logout-btn {
+            background: #554cff;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+        
+        .logout-btn:hover {
+            background: #3b5dd9;
+            transform: scale(1.05);
         }
         
         .dashboard {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
         }
         
         .button-panel {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
             gap: 20px;
         }
         
         .dashboard-button {
-            background-color: white;
+            background: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 30px 20px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: #333;
         }
         
         .dashboard-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
         
         .button-icon {
-            font-size: 30px;
-            color: #6a1b9a;
+            font-size: 34px;
+            color: #383dc1;
+        }
+        
+        .info-box {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .info-box h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .info-box p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
         }
         
         .footer {
@@ -83,43 +129,49 @@
 </head>
 <body>
     <div class="container">
+        
         <header>
             <h1>Healthcare Expert Dashboard</h1>
         </header>
         
+        <nav class="navbar">
+            <a href="{% url 'home' %}" onclick="logoutUser()" class="logout-btn">Logout</a>
+        </nav>
+        
+        <div class="info-box">
+            <h2>Understanding PCOS</h2>
+            <p>Polycystic Ovary Syndrome (PCOS) is a common hormonal disorder that affects millions of women worldwide. As a healthcare expert, your role is crucial in guiding patients towards the right diagnosis, treatment, and lifestyle changes to manage PCOS effectively.</p>
+        </div>
+        
         <div class="dashboard">
             <div class="button-panel">
-              
-                
-                <a class="dashboard-button" id="messagesBtn" style="text-decoration: none;" href="{% url 'message_inbox' %}">
-
+                <a class="dashboard-button" href="{% url 'message_inbox' %}">
                     <span class="button-icon">💬</span>
                     Messages
                 </a>
                 
-                <a class="dashboard-button" id="communityBtn"  style="text-decoration: none;" href="{% url 'community' %}">
+                <a class="dashboard-button" href="{% url 'community' %}">
                     <span class="button-icon">🌐</span>
                     Community
                 </a>
-
-                <a class="dashboard-button" id="communityBtn"  style="text-decoration: none;" href="{% url 'list_community' %}">
-                    <span class="button-icon">🌐</span>
+                
+                <a class="dashboard-button" href="{% url 'list_community' %}">
+                    <span class="button-icon">📋</span>
                     List Community
                 </a>
             </div>
             <div class="button-panel">
-                <a class="dashboard-button" id="communityBtn"  style="text-decoration: none;" href="{% url 'list_community_mine' %}">
-                    <span class="button-icon">🌐</span>
+                <a class="dashboard-button" href="{% url 'list_community_mine' %}">
+                    <span class="button-icon">🏡</span>
                     My Community
                 </a>
-
+                
                {% if user_id == 12 %}
-                <a class="dashboard-button" id="communityBtn" style="text-decoration: none;" href="{% url 'admin_dash' %}">
-                    <span class="button-icon">🌐</span>
-                    Go to admin panel
+                <a class="dashboard-button" href="{% url 'admin_dash' %}">
+                    <span class="button-icon">⚙️</span>
+                    Go to Admin Panel
                 </a>
                 {% endif %}
-
             </div>
         </div>
         
@@ -127,28 +179,5 @@
             <p>PCOS Smart Healthcare System © 2025</p>
         </div>
     </div>
-    
-    <!-- <script>
-        // Simple event listeners for the buttons
-        document.getElementById('userListBtn').addEventListener('click', function() {
-            alert('Navigate to User List page');
-            // window.location.href = "user-list.html";
-        });
-        
-        document.getElementById('profileBtn').addEventListener('click', function() {
-            alert('Navigate to My Profile page');
-            // window.location.href = "expert-profile.html";
-        });
-        
-        document.getElementById('messagesBtn').addEventListener('click', function() {
-            alert('Navigate to Messages page');
-            // window.location.href = "messages.html";
-        });
-        
-        document.getElementById('communityBtn').addEventListener('click', function() {
-            alert('Navigate to Community page');
-            // window.location.href = "community.html";
-        });
-    </script> -->
 </body>
 </html>

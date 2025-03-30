@@ -12,7 +12,7 @@
             --secondary-color: #6c63ff;
             --accent-color: #ff6b6b;
             --light-color: #f8f9fa;
-            --dark-color: #343a40;
+            --dark-color: #257acf;
             --success-color: #28a745;
             --warning-color: #ffc107;
             --info-color: #17a2b8;
@@ -211,7 +211,7 @@
             background-color: white;
             border-radius: 8px;
             padding: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 5px rgba(108, 118, 175, 0.05);
             border-left: 4px solid var(--primary-color);
         }
         
@@ -289,7 +289,7 @@
     {% endif %}
     <header>
         <h1>PCOS Smart Healthcare System</h1>
-        <p>Healthcare Expert Dashboard</p>
+        
     </header>
     
     <div class="container">
@@ -301,6 +301,7 @@
         </div>
         
         <div class="main-content">
+
             <h2 class="section-title">Create Community Request</h2>
             <p>Fill out the form below to request the creation of a new community for PCOS patients and healthcare experts.</p>
             
@@ -358,7 +359,7 @@
     {% if community.status == '1' %}Approved{% else %}Not Approved{% endif %}
 </span>
 
-                        <button class="btn-message">Message</button>
+                        
                     </div>
                 {% empty %}
                     <p>No communities found.</p>

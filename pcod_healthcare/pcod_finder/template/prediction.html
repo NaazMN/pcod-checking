@@ -13,7 +13,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #5c79a8 0%, #5c79a8 100%);
             min-height: 100vh;
             padding: 40px 20px;
         }
@@ -21,7 +21,7 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: white;
+            background: rgb(255, 255, 255);
             border-radius: 20px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
             padding: 30px;
@@ -44,7 +44,7 @@
             transform: translateX(-50%);
             width: 100px;
             height: 4px;
-            background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 100%);
+            background: linear-gradient(90deg, #2543be 0%, #2543be 100%);
             border-radius: 2px;
         }
 
@@ -77,7 +77,7 @@
 
         input[type="number"]:focus,
         input[type="text"]:focus {
-            border-color: #ff9a9e;
+            border-color: #2543be;
             outline: none;
             box-shadow: 0 0 0 3px rgba(255, 154, 158, 0.1);
         }
@@ -95,7 +95,7 @@
         }
 
         button {
-            background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 100%);
+            background: linear-gradient(90deg, #2543be 0%, #2543be 100%);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -123,7 +123,7 @@
         }
 
         .error {
-            color: #dc3545;
+            color: #5d46ce;
             text-align: center;
             margin-top: 20px;
         }
@@ -137,58 +137,106 @@
 </head>
 <body>
     <div class="container">
-        <h1>PCOS Prediction Analysis</h1>
+        <!-- 🔹 Back to Dashboard Button -->
+<div class="back-button-container">
+    <button onclick="goBackToDashboard()" class="back-button">← Back to Dashboard</button>
+</div>
+
+<h1>PCOS Prediction Analysis</h1>
+
+<!-- 🔹 JavaScript to Handle Back Button Click -->
+<script>
+    function goBackToDashboard() {
+        window.location.href = "/user/userdashboard/";  // Redirects to the user dashboard
+    }
+</script>
+
+<!-- 🔹 CSS to Center and Style the Back Button -->
+<style>
+    .back-button-container {
+        display: flex;
+        justify-content: center; /* Centers horizontally */
+        margin-bottom: 20px;
+    }
+
+    .back-button {
+        background: linear-gradient(90deg, #1c37cc 0%, #2575fc 100%);
+        color: rgb(255, 255, 255);
+        border: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .back-button:hover {
+        background: linear-gradient(90deg, #2942bc 0%, #1e60d4 100%);
+        transform: translateY(-2px);
+    }
+</style>
+
+       
         <form method="post">
             {% csrf_token %}
             <div class="form-grid">
                 <div class="form-group">
                     <label>Cycle Length (days)</label>
-                    <input type="number" name="cycle_length" required step="any">
+                    <input type="number" name="cycle_length" placeholder="Enter the value (Normal: 21-35 days)" required step="1" min="21" max="45">
+                    
                 </div>
                 
                 <div class="form-group">
                     <label>FSH (mIU/mL)</label>
-                    <input type="number" name="FSH" required step="any">
+                    <input type="number" name="FSH" placeholder="Enter the value (Normal: 3-10 mIU/mL)" required step="0.1" min="1" max="40">
                 </div>
 
                 <div class="form-group">
                     <label>LH (mIU/mL)</label>
-                    <input type="number" name="LH" required step="any">
+                    <input type="number" name="LH" required step="0.1" min="1" max="75"
+                    placeholder="Enter LH level (Normal: 2-12 mIU/mL)">
                 </div>
 
                 <div class="form-group">
                     <label>FSH/LH</label>
-                    <input type="number" name="FSH_LH" required step="any">
+                    <input type="number" name="FSH_LH" required step="0.01" min="0.2" max="5.0"
+                    placeholder="Enter the value (Normal: 0.5 - 2.0)">
                 </div>
 
                 <div class="form-group">
                     <label>Waist:Hip Ratio</label>
-                    <input type="number" name="waist_hip_ratio" required step="any">
+                    <input type="number" name="waist_hip_ratio" required step="0.01" min="0.5" max="1.5"
+                    placeholder="Enter the value (Normal: 0.75 - 0.85)">
                 </div>
 
                 <div class="form-group">
                     <label>TSH (mIU/L)</label>
-                    <input type="number" name="TSH" required step="any">
+                    <input type="number" name="TSH" required step="0.01" min="0.1" max="10"
+                    placeholder="Enter the value (Normal: 0.4 - 4.0 mIU/L)">
                 </div>
 
                 <div class="form-group">
                     <label>AMH (ng/mL)</label>
-                    <input type="number" name="AMH" required step="any">
+                    <input type="number" name="AMH" required step="0.01" min="0.1" max="10"
+                    placeholder="Enter the value (Normal: 1.0 - 4.0 ng/mL)">
                 </div>
 
                 <div class="form-group">
                     <label>Vit D3 (ng/mL)</label>
-                    <input type="number" name="Vit_D3" required step="any">
+                    <input type="number" name="Vit_D3" required step="0.1" min="5" max="100"
+                    placeholder="Enter the value (Normal: 30 - 100 ng/mL)">
                 </div>
 
                 <div class="form-group">
                     <label>PRG (ng/mL)</label>
-                    <input type="number" name="PRG" required step="any">
+                    <input type="number" name="PRG" required step="0.1" min="0.1" max="214" 
+                    placeholder="Enter the value (Normal: 0.1 - 24 ng/mL)">
                 </div>
 
                 <div class="form-group">
                     <label>RBS (mg/dl)</label>
-                    <input type="number" name="RBS" required step="any">
+                    <input type="number" name="RBS" required step="1" min="50" max="400"
+                    placeholder="Enter the value (Normal: 70 - 140 mg/dL)">
                 </div>
 
                 <div class="form-group">
@@ -233,22 +281,26 @@
 
                 <div class="form-group">
                     <label>Follicle No. (L)</label>
-                    <input type="number" name="follicle_L" required>
+                    <input type="number" name="follicle_L" required step="1" min="0" max="30"
+                    placeholder="Enter the value (Normal: 6 - 10)">
                 </div>
 
                 <div class="form-group">
                     <label>Follicle No. (R)</label>
-                    <input type="number" name="follicle_R" required>
+                    <input type="number" name="follicle_R" required step="1" min="0" max="30"
+                    placeholder="Enter the value (Normal: 6 - 10)">
                 </div>
 
                 <div class="form-group">
                     <label>Avg. F Size (L) (mm)</label>
-                    <input type="number" name="avg_f_size_L" required step="any">
+                    <input type="number" name="avg_f_size_L" required step="0.1" min="2" max="30"
+                    placeholder="Enter the value (Normal: 16 - 26 mm)">
                 </div>
 
                 <div class="form-group">
                     <label>Avg. F Size (R) (mm)</label>
-                    <input type="number" name="avg_f_size_R" required step="any">
+                    <input type="number" name="avg_f_size_R" required step="0.1" min="2" max="30"
+                    placeholder="Enter the value (Normal: 16 - 26 mm)">
                 </div>
             </div>
 
@@ -258,9 +310,9 @@
         {% if prediction %}
         <div class="prediction-result">
             {% if prediction == "PCOS Detected" %}
-            <h2 style="color: #dc3545;">The model predicts that the patient has PCOS.</h2>
+            <h2 style="color: #2e5eb8;">The model predicts that the patient has PCOS.</h2>
             {% else %}
-            <h2 style="color: #28a745;">The model predicts that the patient does not have PCOS.</h2>
+            <h2 style="color: hsl(228, 61%, 41%);">The model predicts that the patient does not have PCOS.</h2>
             {% endif %}
         </div>
         {% endif %}

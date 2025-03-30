@@ -1,40 +1,18 @@
-"""
-URL configuration for pcod_healthcare project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.urls import path,include
+from django.urls import path, include
 from . import views
 
-urlpatterns = [    
+urlpatterns = [
+    path('', views.print_hello, name="home"),
+    path('register/', views.register, name="register_page"),
+    path('register/login/', views.login, name="register_login"),  # Fixed login inside register
+    path('login/', views.login, name="login"),
+    path('predict/', views.predict, name="predict"),
+    path('learmore/', views.learmore, name="learmore"),
+    path('forgot_password/', views.forgot_password, name="forgot_password"),
+    
+    # Ensure 'user/' and 'expert/' prefixes avoid conflicts
+    path('user/', include('user.urls')),
+    path('expert/', include('expert.urls')),
 
-    path('', views.print_hello,name="home"),
-    path('register/',views.register,name="register_page"),
-    path('predict/',views.predict,name="predict"),
-    path('login/',views.login,name="login"),
-    path('learmore/',views.learmore,name="learmore"),
-    path('forgot_password/',views.forgot_password,name="forgot_password"),
-
-    path('',include('user.urls')),
-    path('',include('expert.urls')),
-
-
-    path('expert/registeration/',views.healthcareexpert_reg,name="expert_registeration"),
-
-
-
-
-
-
+    path('expert/registeration/', views.healthcareexpert_reg, name="expert_registeration"),
 ]

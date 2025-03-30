@@ -8,7 +8,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #f8f9fa;
+      background-color: #8a71ae;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     
@@ -48,7 +48,7 @@
     }
     
     .chat-item:hover {
-      background-color: #f7f9fc;
+      background-color: #6169af;
     }
     
     .chat-name {
@@ -75,6 +75,9 @@
 </head>
 <body>
   <div class="chat-container">
+    <a href="{% url 'expert_dashboard' %}" class="btn btn-primary" style="margin-bottom: 15px;">
+      ← Back to Dashboard
+      </a>
     <div class="chat-header">
       <h2>New Messages</h2>
     </div>
