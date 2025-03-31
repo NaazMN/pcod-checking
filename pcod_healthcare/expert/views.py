@@ -114,7 +114,7 @@ def community(request):
 def list_community(request):
     """ Fetch all communities with owner details """
     user_id = request.session.get('user_id')
-    communities = Community.objects.exclude(userid=user_id).all()
+    communities = Community.objects.exclude(userid=user_id,status="1").all()
     community_data = []
     for community in communities:
         # Get the owner's name using the userid field

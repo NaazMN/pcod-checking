@@ -363,14 +363,14 @@
         <div class="main-content">
             <div class="section-title">
                 Pending Community Requests
-                <span class="notification-count" id="pendingCount">3 New</span>
+                <!-- <span class="notification-count" id="pendingCount">3 New</span> -->
             </div>
             
             {% if communities %}
             <div class="request-cards" id="pendingRequests">
                 {% for community in communities %}
                 <div class="request-card" id="request-{{ forloop.counter }}">
-                    <span class="request-status status-pending">{{ community.status }}</span>
+                    <!-- <span class="request-status status-pending">{{ community.status }}</span> -->
                     <div class="request-header">
                         <h3 class="request-title">{{ community.name }}</h3>
                         <span class="request-date">Created: {{ community.date_c }}</span>
@@ -393,10 +393,15 @@
                         </div>
                     </div>
         
+{% if community.status == "Pending" %}
                     <div class="request-actions">
                         <a href="{% url 'approve' community.id %}" class="btn btn-success approve-btn">Approve Request</a>
-                        <a href="" class="btn btn-danger reject-btn">Reject Request</a>
+                        <!-- <a href="" class="btn btn-danger reject-btn">Reject Request</a> -->
                     </div>
+
+{% endif %}
+
+
                 </div>
                 {% endfor %}
             </div>
