@@ -109,7 +109,7 @@ def login(request):
             user = Usertable.objects.get(email=uname)
             if user.password == pass_t:
                 request.session['user_id'] = user.id
-                messages.success(request, "Login successful!")
+                # messages.success(request, "Login successful!")
                 if uname == 'admin@gmail.com':
                     return redirect('admin_dash')
                 if user.usertype == '0':
