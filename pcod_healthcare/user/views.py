@@ -83,8 +83,7 @@ def list_community_user(request):
 
     if not user_id:
         return render(request, 'list_community.html', {'error': 'User not logged in'})
-
-    communities = Community.objects.filter(status=1)
+    communities = Community.objects.exclude(userid=user_id,status="1").all()
     community_data = []
 
     for community in communities:
