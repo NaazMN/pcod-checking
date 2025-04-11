@@ -1,7 +1,25 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from expert.models import Community
 from pcod_finder.models import Usertable
+from user.models import Comminityjoin  # Ensure this matches the model name
+
 # Create your views here.
+
+def community_members_view(request, community_id):
+    # Get all users who joined the community
+    members = Comminityjoin.objects.filter(comminityid=community_id)
+
+    member_data = []
+    for member in members:
+        user = Usertable.objects.filter(id=member.userid).first()
+        if user:
+            member_data.append({
+                'name': user.name,  # User name from Usertable
+                'a_status': member.a_status,  # Approval status from Comminityjoin
+                'join_id': member.id  # ID of Comminityjoin entry
+            })
+
+    return render(request, 'community_members_admin.html', {'members': member_data, 'community_id': community_id})
 
 
 def admin_dash(request):

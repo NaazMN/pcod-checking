@@ -7,6 +7,9 @@ urlpatterns = [
     path('approve/<int:id>/', views.approve, name='approve'),  # Approval URL
     path('list_users/', views.list_users, name='list_users'),
     path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'),
+    path('admin/community/<int:community_id>/members/', views.community_members_view, name='community_members_view'),
+
+
 
 
     

@@ -392,13 +392,15 @@
                             <p>{{ community.Rules }}</p>
                         </div>
                     </div>
-        
+                  
 {% if community.status == "Pending" %}
                     <div class="request-actions">
-                        <a href="{% url 'approve' community.id %}" class="btn btn-success approve-btn">Approve Request</a>
-                        <!-- <a href="" class="btn btn-danger reject-btn">Reject Request</a> -->
+                        <a href="{% url 'approve' community.id %}" class="btn btn-success approve-btn" style="background-color: green;">Approve Request</a>
                     </div>
-
+{% else %}
+<div class="request-actions">
+    <a href="{% url 'community_members_view' community.id %}" class="btn btn-success approve-btn">View user list</a>
+</div>
 {% endif %}
 
 
